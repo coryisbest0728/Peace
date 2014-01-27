@@ -3,11 +3,11 @@ define(["peace/declare"], function (declare) {
 	return declare(null, {
 		
 		constructor: function () {
-			console.debug("A.constructor");
+			console.log("A.constructor");
 		},
 		
 		before: function () {
-			console.debug("before");
+			console.log("before");
 		}
 	});
 });

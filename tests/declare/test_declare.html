@@ -12,10 +12,16 @@
 			    }
 			});
 			
-			require(["tests/declare/B"], function (B) {
+			require([
+				"tests/declare/B",
+				"tests/declare/C"
+			], function (B, C) {
 				var b = new B();
 				b.before();
-				console.debug(b);
+				console.log(b);
+				console.log("======Another Testing as below======");
+				var c = new C();
+				console.log(c);
 			});
 		</script>
 	</head>

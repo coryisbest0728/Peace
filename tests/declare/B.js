@@ -3,15 +3,15 @@ define(["peace/declare", "tests/declare/A"], function (declare, A) {
 	return declare(A, {
 		
 		constructor: function () {
-			console.debug("B.constructor");
+			console.log("B.constructor");
 		},
 		
 		before: function () {
-			console.debug("beforeMain");
+			console.log("beforeMain");
 		},
 		
 		operate: function () {
-			console.debug("operate");
+			console.log("operate");
 		}
 	});
 });
