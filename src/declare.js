@@ -26,13 +26,12 @@ define(function () {
 	// simple constructor for ctor.
 	function simpleConstructor(bases) {
 		return function () {
-			for (var i = 0, j = bases.length; i < j; ++i) {
+			for (var i = bases.length - 1; i >= 0; --i) {
 				var f = bases[i],
 					m = f._meta;
 				f = m ? m.ctor : f;
 				if (f) {
 					f.apply(this, arguments);
-					break;
 				}
 			}
 		};
@@ -79,7 +78,12 @@ define(function () {
 			xtor.prototype = superclass.prototype;
 			proto = new xtor();
 			
-			bases.push(superclass);
+			var sm = superclass.prototype.constructor._meta;
+			if (sm) {
+				bases = bases.concat(sm.bases);
+			} else {
+				bases.push(superclass);
+			}
 		}
 		
 		// mixin props to proto
