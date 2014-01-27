@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Declare testing</title>
+		<script src="../libs/require.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+			require.config({
+			    paths: {
+			        peace: "../../src",
+			        tests: ".."
+			    }
+			});
+			
+			require(["tests/declare/Main"], function (Main) {
+				var main = new Main();
+				main.before();
+				console.debug(main);
+			});
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>
