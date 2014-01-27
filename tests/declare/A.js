@@ -1,9 +1,9 @@
 define(["peace/declare"], function (declare) {
 	
-	return declare("tests.declare._Test", null, {
+	return declare(null, {
 		
 		constructor: function () {
-			console.debug("123");
+			console.debug("A.constructor");
 		},
 		
 		before: function () {

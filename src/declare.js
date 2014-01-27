@@ -3,13 +3,14 @@ define(function () {
 	//		peace/declare
 	
 	var op = Object.prototype,
-		opts = op.toString(),
 		xtor = new Function;
 	
+	// err function as warning
 	function err (msg, cls) {
 		throw new Error("declare" + (cls ? " " + cls : "") + ": " + msg);
 	}
 	
+	// mixin source for the safe way.
 	function safeMixin (target, source) {
 		var key = "",
 			t;
@@ -22,6 +23,7 @@ define(function () {
 		return target;
 	}
 	
+	// simple constructor for ctor.
 	function simpleConstructor(bases) {
 		return function () {
 			for (var i = 0, j = bases.length; i < j; ++i) {
@@ -30,12 +32,38 @@ define(function () {
 				f = m ? m.ctor : f;
 				if (f) {
 					f.apply(this, arguments);
+					break;
 				}
 			}
 		};
 	}
 	
-	return function declare(/*String?*/className, /*Function|Function[]*/superclass, /*JsonObject？*/props) {
+	return function declare(/*String?*/className, /*Function*/superclass, /*JsonObject？*/props) {
+		// summary:
+		//		This declare just only can extends one superclass right now.
+		// className: String?
+		//		The declared class name, as String.
+		// superclass: Function
+		//		The superclass of declared class.
+		// props: JsonObject?
+		//		The class properities.
+		//
+		// example:
+		//	|	var A = declare(null, {
+		//	|		constructor: function () {
+		//	|			console.log("A.constructor");
+		//	|		}
+		//	|	});
+		//	|	var B = declare(A, {
+		//	|		constructor: function () {
+		//	|			console.log("B.constructor");
+		//	|		}
+		//	|	});
+		//	|	new B()
+		//	|	// prints:
+		//	|	// A.constructor
+		//	|	// B.constructor
+		
 		// crack parameters
 		if(typeof className != "string"){
 			props = superclass;
@@ -53,6 +81,8 @@ define(function () {
 			
 			bases.push(superclass);
 		}
+		
+		// mixin props to proto
 		safeMixin(proto, props);
 		
 		// add constructors

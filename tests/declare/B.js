@@ -1,9 +1,9 @@
-define(["peace/declare", "tests/declare/_Test"], function (declare, _Test) {
+define(["peace/declare", "tests/declare/A"], function (declare, A) {
 	
-	return declare("tests.declare.Main", _Test, {
+	return declare(A, {
 		
 		constructor: function () {
-			console.debug("main: 123");
+			console.debug("B.constructor");
 		},
 		
 		before: function () {
