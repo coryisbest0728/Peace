@@ -101,6 +101,8 @@ define(function () {
 			xtor.prototype = superclass.prototype;
 			proto = new xtor();
 			
+			// the meta in this class.
+			// I put it in the constructor.
 			var sm = superclass.prototype.constructor._meta;
 			if (sm) {
 				bases = bases.concat(sm.bases);
