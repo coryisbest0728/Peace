@@ -1,4 +1,6 @@
 define(function () {
+	"use strict";
+	
 	// module:
 	//		peace/declare
 	
@@ -13,14 +15,15 @@ define(function () {
 				// closest thing possible to the ECMAScript 5 internal IsCallable function
 				throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
 			}
-			var aArgs = Array.prototype.slice.call(arguments, 1), 
+			var slice = Array.prototype.slice,
+				aArgs = slice.call(arguments, 1), 
 				fToBind = this, 
 				fNOP = function () {},
 				fBound = function () {
 					return fToBind.apply(this instanceof fNOP && oThis
 										? this
 										: oThis,
-										aArgs.concat(Array.prototype.slice.call(arguments)));
+										aArgs.concat(slice.call(arguments)));
 				};
 		
 			fNOP.prototype = this.prototype;
