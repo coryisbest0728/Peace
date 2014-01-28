@@ -3,6 +3,7 @@ define(function () {
 	//		peace/declare
 	
 	var op = Object.prototype,
+		opts = op.toString,
 		xtor = new Function;
 	
 	// err function as warning
@@ -12,12 +13,16 @@ define(function () {
 	
 	// mixin source for the safe way.
 	function safeMixin (target, source) {
-		var key = "",
+		var name = "",
 			t;
-		for (key in source) {
-			t = source[key];
-			if ((t !== op[key] || !(key in op)) && key !== "constructor") { // skipped a constructor
-				target[key] = t;
+		for (name in source) {
+			t = source[name];
+			if ((t !== op[name] || !(name in op)) && name !== "constructor") { // skipped a constructor
+				if(opts.call(t) == "[object Function]"){
+					// non-trivial function method => attach its name
+					t.nom = name;
+				}
+				target[name] = t;
 			}
 		}
 		return target;
@@ -35,6 +40,24 @@ define(function () {
 				}
 			}
 		};
+	}
+	
+	function _super(args, newArgs) {
+		var caller = args.callee,
+			meta = this.constructor._meta,
+			bases = meta.bases;
+		
+		if (newArgs) {
+			for (var i = 0, j = newArgs.length; i < j; ++i) {
+				args[i] = newArgs[i];
+			}
+		}
+		
+		// cause of single inheritance
+		var superclass = bases[1];
+		if (superclass) {
+			superclass.prototype[caller.nom].apply(this, args);
+		}
 	}
 	
 	return function declare(/*String?*/className, /*Function*/superclass, /*JsonObject？*/props) {
@@ -102,6 +125,7 @@ define(function () {
 		};
 		ctor.prototype = proto;
 		proto.constructor = ctor;
+		proto._super = _super;
 		
 		if (className) {
 			proto.declaredClass = className;

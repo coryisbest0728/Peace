@@ -13,19 +13,21 @@
 			});
 			
 			require([
+				"tests/declare/A",
 				"tests/declare/B",
 				"tests/declare/C"
-			], function (B, C) {
+			], function (A, B, C) {
+				var a = new A();
+				console.log("======B Testing as below======");
 				var b = new B();
 				b.before();
-				console.log(b);
-				console.log("======Another Testing as below======");
+				console.log("======C Testing as below======");
 				var c = new C();
-				console.log(c);
+				c.print(1, 2);
 			});
 		</script>
 	</head>
 	<body>
-		
+		Please open your console. The info in it.
 	</body>
 </html>
