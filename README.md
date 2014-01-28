@@ -1,4 +1,5 @@
 Peace
 =====
 
-Javascript基于面向对象解决方案。
+Javascript based OOP Solution.
+For now, it just support single inheritance mode.
